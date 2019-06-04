@@ -1,10 +1,24 @@
 # cluster-caution
-
-
-
 ## Description
 
+This subcommand prevents cluster and namespace slip.
+
 ## Usage
+
+```
+# make .kube-cluster-caution file
+$ kubectl cluster-caution --init
+$ cat .kube-cluster-caution
+{"LocationOfOrigin":"/Users/example/.kube/config","cluster":"cluster.example.com","user":"example","namespace":"example"}
+
+# switch other cluster
+$ kubectl config use-context other.example.com --namespace=other
+$ alias kc='kubectl cluster-caution'
+$ kc delete pod --all
+ current context other.example.com(other)
+ repository context cluster.example.com(example)
+ Do you want to continue?(Y/n)
+```
 
 ## Install
 
