@@ -30,6 +30,15 @@ To install, use `go get`:
 $ go get -d github.com/pyama86/cluster-caution
 ```
 
+## AutoComplete
+### zsh
+```bash
+# .zshrc
+alias k='kubectl-cluster-caution'
+source <(k completion zsh | gsed -e 's/__start_kubectl kubectl/__start_kubectl kubectl-cluster-caution/g')
+source "/usr/local/opt/kube-ps1/share/kube-ps1.sh"
+PS1='$(kube_ps1)'$PS1
+```
 ## Contribution
 
 1. Fork ([https://github.com/pyama86/cluster-caution/fork](https://github.com/pyama86/cluster-caution/fork))
