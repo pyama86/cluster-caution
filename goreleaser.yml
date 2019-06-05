@@ -1,3 +1,11 @@
+builds:
+  - main: main.go
+    binary: kubectl-cluster-caution
+    goos:
+      - darwin
+      - linux
+    goarch:
+      - amd64
 brew:
   github:
     owner: pyama86
