@@ -1,7 +1,7 @@
 module github.com/pyama86/cluster-caution
 
 require (
-	github.com/Songmu/prompter v0.2.0 // indirect
+	github.com/Songmu/prompter v0.2.0
 	github.com/google/btree v1.0.0 // indirect
 	github.com/gregjones/httpcache v0.0.0-20190212212710-3befbb6ad0cc // indirect
 	github.com/hashicorp/vault/api v1.0.2
