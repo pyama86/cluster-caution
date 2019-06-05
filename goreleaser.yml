@@ -8,6 +8,6 @@ brew:
   description: "Prevents execution errors in kubectl"
   homepage: "https://github.com/pyama86/cluster-caution"
   install: |
-    bin.install 'kubectl-caution'
+    bin.install 'kubectl-cluster-caution'
   test: |
-    system "#{bin}/kubectl-caution"
+    system "#{bin}/kubectl-cluster-caution"
