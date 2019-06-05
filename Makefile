@@ -15,5 +15,10 @@ test: ## Run test
 
 run:
 	$(GO) run main.go cli.go $(OPT)
+build:
+	$(GO) build -o kubectl-cluster-caution main.go cli.go
+
+install: build
+	mv kubectl-cluster-caution /usr/local/bin/kubectl-cluster-caution
 
 .PHONY: release
