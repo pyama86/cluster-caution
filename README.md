@@ -6,9 +6,10 @@ This subcommand prevents cluster and namespace slip.
 ## Usage
 
 ```
-$ alias kc='kubectl cluster-caution'
+$ alias kc='kubectl-cluster-caution'
 # make .kube-cluster-caution file
-$ kc cluster-caution --add
+$ kc --add-context
+add cluster cluster.example.com(exaple)
 $ cat .kube-cluster-caution
 [{"LocationOfOrigin":"/Users/example/.kube/config","cluster":"cluster.example.com","user":"example","namespace":"example"}]
 
@@ -17,6 +18,8 @@ $ kc config use-context other.example.com --namespace=other
 $ kc delete pod --all
 Repository configuration is different from cluster or namespace.
 Do you want to continue?(Y/n) (yes/no) [yes]:
+$ kc --delete-context
+delete cluster cluster.example.com(exaple)
 ```
 
 ## Install
