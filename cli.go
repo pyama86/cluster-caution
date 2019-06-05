@@ -12,7 +12,6 @@ import (
 	"syscall"
 
 	"github.com/Songmu/prompter"
-	"github.com/k0kubun/pp"
 	flag "github.com/spf13/pflag"
 
 	"k8s.io/cli-runtime/pkg/genericclioptions"
@@ -81,16 +80,16 @@ func (cli *CLI) run(args []string) error {
 	if !exists {
 		return err
 	}
-	top, err := getRepositoryTop()
-	if err != nil {
-		return err
-	}
-
-	fp := filepath.Join(strings.TrimRight(top, "\n"), ".kube-cluster-coution")
-
-	acs, err := readFile(fp)
-	if err != nil {
-		return err
+	top, _ := getRepositoryTop()
+	acs := []*api.Context{}
+	fp := ""
+	if top != "" {
+		fp = filepath.Join(strings.TrimRight(top, "\n"), ".kube-cluster-coution")
+		a, err := readFile(fp)
+		if err != nil {
+			return err
+		}
+		acs = a
 	}
 
 	// Show version
@@ -119,9 +118,13 @@ func (cli *CLI) run(args []string) error {
 			}
 			acs = a
 		}
-		if err := writeFile(acs, fp); err != nil {
-			return err
+
+		if fp != "" {
+			if err := writeFile(acs, fp); err != nil {
+				return err
+			}
 		}
+
 		fmt.Println(resultMessage)
 	} else {
 		runKubectl(acs, currentContext)
@@ -170,7 +173,6 @@ func readFile(path string) ([]*api.Context, error) {
 		if _, notfound := err.(*os.PathError); notfound {
 			return []*api.Context{}, nil
 		}
-		pp.Println(err)
 		return nil, err
 	}
 	var ac []*api.Context
