@@ -1,6 +1,5 @@
 builds:
-  - main: main.go
-    binary: kubectl-cluster-caution
+  - binary: kubectl-cluster-caution
     goos:
       - darwin
       - linux
