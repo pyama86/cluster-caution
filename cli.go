@@ -188,7 +188,7 @@ func runKubectl(ac []*api.Context, cur *api.Context) {
 		}
 	}
 
-	if !exist {
+	if !exist && len(ac) > 0 {
 		if !prompter.YesNo("Repository configuration is different from cluster or namespace.\nDo you want to continue?(Y/n)", true) {
 			return
 		}
