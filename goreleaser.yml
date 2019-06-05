@@ -1,7 +1,7 @@
 brew:
   github:
     owner: pyama86
-    name: cluster-caution
+    name: homebrew-cluster-caution
   commit_author:
     name: pyama86
     email: www.kazu.com@gmail.com
