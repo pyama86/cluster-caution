@@ -71,9 +71,7 @@ func (cli *CLI) run(args []string) error {
 	cli.configFlags.AddFlags(flags)
 
 	// Parse commandline flag
-	if err := flags.Parse(args[1:]); err != nil {
-		return err
-	}
+	flagError := flags.Parse(args[1:])
 
 	rawConfig, err := cli.configFlags.ToRawKubeConfigLoader().RawConfig()
 	if err != nil {
@@ -102,30 +100,33 @@ func (cli *CLI) run(args []string) error {
 	}
 
 	resultMessage := fmt.Sprintf("add cluster %s(%s)\n", currentContext.Cluster, currentContext.Namespace)
-	if add {
-		a, exist := uniqueAppendContext(acs, currentContext)
-		if exist {
-			resultMessage = fmt.Sprintf("cluster %s(%s) is exists\n", currentContext.Cluster, currentContext.Namespace)
-		}
-		acs = a
-	} else if del {
-		a, exist := deleteContext(acs, currentContext)
-		if exist {
-			resultMessage = fmt.Sprintf("delete cluster %s(%s)\n", currentContext.Cluster, currentContext.Namespace)
-		} else {
-			resultMessage = fmt.Sprintf("cluster %s(%s) is not exists\n", currentContext.Cluster, currentContext.Namespace)
-		}
-		acs = a
-	} else {
-		runKubectl(acs, currentContext)
-	}
-
 	if add || del {
+		if flagError != nil {
+			return flagError
+		}
+		if add {
+			a, exist := uniqueAppendContext(acs, currentContext)
+			if exist {
+				resultMessage = fmt.Sprintf("cluster %s(%s) is exists\n", currentContext.Cluster, currentContext.Namespace)
+			}
+			acs = a
+		} else if del {
+			a, exist := deleteContext(acs, currentContext)
+			if exist {
+				resultMessage = fmt.Sprintf("delete cluster %s(%s)\n", currentContext.Cluster, currentContext.Namespace)
+			} else {
+				resultMessage = fmt.Sprintf("cluster %s(%s) is not exists\n", currentContext.Cluster, currentContext.Namespace)
+			}
+			acs = a
+		}
 		if err := writeFile(acs, fp); err != nil {
 			return err
 		}
 		fmt.Println(resultMessage)
+	} else {
+		runKubectl(acs, currentContext)
 	}
+
 	return nil
 }
 
