@@ -1,0 +1,13 @@
+brew:
+  github:
+    owner: pyama86
+    name: kubectl-cluster-caution
+  commit_author:
+    name: pyama86
+    email: www.kazu.com@gmail.com
+  description: "Prevents execution errors in kubectl"
+  homepage: "https://github.com/pyama86/cluster-caution"
+  install: |
+    bin.install 'kubectl-caution'
+  test: |
+    system "#{bin}/kubectl-caution"
