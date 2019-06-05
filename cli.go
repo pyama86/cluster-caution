@@ -20,7 +20,7 @@ import (
 )
 
 const Name string = "cluster-caution"
-const Version string = "0.1.0"
+const Version string = "0.1.1"
 
 // Exit codes are int values that represent an exit code for a particular error.
 const (
